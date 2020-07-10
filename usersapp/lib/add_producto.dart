@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:usersapp/shared/loading.dart';
 
 import 'crud.dart';
@@ -396,7 +397,17 @@ class _AddProductoState extends State<AddProducto> {
           color: Colors.blueGrey[700],
           icon: Icon(Icons.add_circle),
           label: Text('Agregar categoria'),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pop();
+            showDialog(
+                context: context,
+                builder: (context) {
+                  Future.delayed(Duration(seconds: 60), () {
+                    Navigator.of(context).pop();
+                  });
+                  return _agregar('categorias');
+                });
+          },
         )
       ],
       title: Text(
@@ -427,7 +438,17 @@ class _AddProductoState extends State<AddProducto> {
           color: Colors.blueGrey[700],
           icon: Icon(Icons.add_circle),
           label: Text('Agregar departamento'),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pop();
+            showDialog(
+                context: context,
+                builder: (context) {
+                  Future.delayed(Duration(seconds: 60), () {
+                    Navigator.of(context).pop();
+                  });
+                  return _agregar('departamentos');
+                });
+          },
         )
       ],
       title: Text(
@@ -573,6 +594,145 @@ class _AddProductoState extends State<AddProducto> {
     );
   }
 
+  Widget _agregar(String coleccion) {
+    String name = "";
+    File foto;
+    return AlertDialog(
+      title: Text(
+        'Crear',
+        style: TextStyle(
+            fontSize: 25.0,
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.bold),
+        textAlign: TextAlign.center,
+      ),
+      actions: [
+        FlatButton.icon(
+          color: Colors.blueGrey[700],
+          icon: Icon(Icons.save),
+          label: Text('Guardar'),
+          onPressed: () {
+            Navigator.of(context).pop();
+            switch (coleccion) {
+              case 'marcas':
+                {
+                  Crud(
+                          coleccion: coleccion,
+                          mapa: Marca(
+                                  name: name,
+                                  url: DateTime.now().toIso8601String())
+                              .toMap())
+                      .create()
+                      .whenComplete(() {
+                    Fluttertoast.showToast(msg: "Agregaste a $coleccion");
+                  });
+                }
+                break;
+              case 'departamentos':
+                {
+                  Crud(
+                          coleccion: coleccion,
+                          mapa: Departamento(
+                                  name: name,
+                                  url: DateTime.now().toIso8601String())
+                              .toMap())
+                      .create()
+                      .whenComplete(() {
+                    Fluttertoast.showToast(msg: "Agregaste a $coleccion");
+                  });
+                }
+                break;
+              case 'categorias':
+                {
+                  Crud(
+                          coleccion: coleccion,
+                          mapa: Categoria(
+                                  name: name,
+                                  url: DateTime.now().toIso8601String())
+                              .toMap())
+                      .create()
+                      .whenComplete(() {
+                    Fluttertoast.showToast(msg: "Agregaste a $coleccion");
+                  });
+                }
+                break;
+            }
+          },
+        )
+      ],
+      content: Container(
+        height: 250.0,
+        child: Form(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 20.0,
+              ),
+              if (foto == null) ...[
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: FlatButton.icon(
+                        icon: Icon(
+                          Icons.camera_alt,
+                          color: Colors.green[800],
+                        ),
+                        label: Text('Foto'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          /*                      crop.pickImage(ImageSource.camera).whenComplete(() {
+                            setState((){
+                              imagen = crop.imagen;
+                            });
+                          }); */
+                        },
+                      ),
+                    ),
+                    Expanded(
+                      child: FlatButton.icon(
+                        icon: Icon(
+                          Icons.photo_library,
+                          color: Colors.orange[800],
+                        ),
+                        label: Text('Imagen'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          /*                      crop.pickImage(ImageSource.gallery).whenComplete(() {
+                            setState(() {
+                              imagen = crop.imagen;
+                            }); 
+                          }); */
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ] else ...[
+                Container(
+                  child: Image.file(foto),
+                )
+              ],
+              SizedBox(
+                height: 20.0,
+              ),
+              TextFormField(
+                decoration:
+                    textInputDecoration.copyWith(hintText: 'Descripcion'),
+                validator: (val) =>
+                    val.isEmpty ? 'Ingrese una descripcion de producto' : null,
+                onChanged: (val) {
+                  setState(() {
+                    name = val;
+                  });
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _marcas() {
     return AlertDialog(
       actions: <Widget>[
@@ -580,7 +740,17 @@ class _AddProductoState extends State<AddProducto> {
           color: Colors.blueGrey[700],
           icon: Icon(Icons.add_circle),
           label: Text('Agregar marca'),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pop();
+            showDialog(
+                context: context,
+                builder: (context) {
+                  Future.delayed(Duration(seconds: 60), () {
+                    Navigator.of(context).pop();
+                  });
+                  return _agregar('marcas');
+                });
+          },
         )
       ],
       title: Text(
