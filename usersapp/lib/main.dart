@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:provider/provider.dart';
 
 import 'add_producto.dart';
+import 'home_page.dart';
 import 'models.dart';
 
 void main() {
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: AddProducto(),
+      home: HomePage(),
     );
   }
 }

@@ -26,6 +26,7 @@ class _AddProductoState extends State<AddProducto> {
   Categoria categoria;
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return cargando
         ? Loading()
         : Scaffold(
@@ -45,7 +46,8 @@ class _AddProductoState extends State<AddProducto> {
               decoration: BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage('assets/bg1.jpg'), fit: BoxFit.cover)),
-              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 40.0),
+              padding: EdgeInsets.symmetric(
+                  vertical: 20.0, horizontal: size.width * 0.125),
               child: Form(
                 child: ListView(
                   children: <Widget>[
@@ -54,7 +56,7 @@ class _AddProductoState extends State<AddProducto> {
                     ),
                     TextFormField(
                       decoration:
-                          textInputDecoration.copyWith(hintText: 'Descripcion'),
+                          textInputDecoration.copyWith(hintText: 'Descripción'),
                       validator: (val) => val.isEmpty
                           ? 'Ingrese una descripcion de producto'
                           : null,
@@ -287,105 +289,108 @@ class _AddProductoState extends State<AddProducto> {
             fontWeight: FontWeight.bold),
         textAlign: TextAlign.center,
       ),
-      content: Column(
-        children: <Widget>[
-          if (imagen == null) ...[
-            Divider(),
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: FlatButton.icon(
-                    icon: Icon(
-                      Icons.camera_alt,
-                      color: Colors.green[800],
-                    ),
-                    label: Text('Foto'),
-                    onPressed: () {
-                      Navigator.of(context).pop();
+      content: Container(
+        height: 150.0,
+        child: ListView(
+          children: <Widget>[
+            if (imagen == null) ...[
+              Divider(),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: FlatButton.icon(
+                      icon: Icon(
+                        Icons.camera_alt,
+                        color: Colors.green[800],
+                      ),
+                      label: Text('Foto'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
 /*                      crop.pickImage(ImageSource.camera).whenComplete(() {
-                        setState((){
-                          imagen = crop.imagen;
-                        });
-                      }); */
-                    },
-                  ),
-                ),
-                Expanded(
-                  child: FlatButton.icon(
-                    icon: Icon(
-                      Icons.photo_library,
-                      color: Colors.orange[800],
+                          setState((){
+                            imagen = crop.imagen;
+                          });
+                        }); */
+                      },
                     ),
-                    label: Text('Imagen'),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-/*                      crop.pickImage(ImageSource.gallery).whenComplete(() {
-                        setState(() {
-                          imagen = crop.imagen;
-                        }); 
-                      }); */
-                    },
                   ),
-                ),
-              ],
-            )
-          ],
-          if (marca == null) ...[
-            Divider(),
-            FlatButton.icon(
-              icon: Icon(Icons.supervised_user_circle,
-                  color: Colors.blueGrey[600]),
-              label: Text('Agregar marca'),
-              onPressed: () {
-                Navigator.of(context).pop();
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      Future.delayed(Duration(seconds: 60), () {
+                  Expanded(
+                    child: FlatButton.icon(
+                      icon: Icon(
+                        Icons.photo_library,
+                        color: Colors.orange[800],
+                      ),
+                      label: Text('Imagen'),
+                      onPressed: () {
                         Navigator.of(context).pop();
+/*                      crop.pickImage(ImageSource.gallery).whenComplete(() {
+                          setState(() {
+                            imagen = crop.imagen;
+                          }); 
+                        }); */
+                      },
+                    ),
+                  ),
+                ],
+              )
+            ],
+            if (marca == null) ...[
+              Divider(),
+              FlatButton.icon(
+                icon: Icon(Icons.supervised_user_circle,
+                    color: Colors.blueGrey[600]),
+                label: Text('Agregar marca'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        Future.delayed(Duration(seconds: 60), () {
+                          Navigator.of(context).pop();
+                        });
+                        return _marcas();
                       });
-                      return _marcas();
-                    });
-              },
-            )
+                },
+              )
+            ],
+            if (departamento == null) ...[
+              Divider(),
+              FlatButton.icon(
+                icon: Icon(Icons.local_mall, color: Colors.cyanAccent),
+                label: Text('Departamento'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        Future.delayed(Duration(seconds: 60), () {
+                          Navigator.of(context).pop();
+                        });
+                        return _departamentos();
+                      });
+                },
+              )
+            ],
+            if (categoria == null) ...[
+              Divider(),
+              FlatButton.icon(
+                icon: Icon(Icons.local_offer, color: Colors.tealAccent),
+                label: Text('Categoria'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        Future.delayed(Duration(seconds: 60), () {
+                          Navigator.of(context).pop();
+                        });
+                        return _categorias();
+                      });
+                },
+              )
+            ]
           ],
-          if (departamento == null) ...[
-            Divider(),
-            FlatButton.icon(
-              icon: Icon(Icons.local_mall, color: Colors.cyanAccent),
-              label: Text('Departamento'),
-              onPressed: () {
-                Navigator.of(context).pop();
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      Future.delayed(Duration(seconds: 60), () {
-                        Navigator.of(context).pop();
-                      });
-                      return _departamentos();
-                    });
-              },
-            )
-          ],
-          if (categoria == null) ...[
-            Divider(),
-            FlatButton.icon(
-              icon: Icon(Icons.local_offer, color: Colors.tealAccent),
-              label: Text('Categoria'),
-              onPressed: () {
-                Navigator.of(context).pop();
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      Future.delayed(Duration(seconds: 60), () {
-                        Navigator.of(context).pop();
-                      });
-                      return _categorias();
-                    });
-              },
-            )
-          ]
-        ],
+        ),
       ),
     );
   }
@@ -563,7 +568,7 @@ class _AddProductoState extends State<AddProducto> {
                         width: 40.0,
                         child: FadeInImage(
                             placeholder: AssetImage('assets/marca.png'),
-                            image: NetworkImage(obj.url),
+                            image: NetworkImage(obj.url == null ? "" : obj.url),
                             fit: BoxFit.cover),
                       ),
                       SizedBox(
@@ -661,9 +666,9 @@ class _AddProductoState extends State<AddProducto> {
         )
       ],
       content: Container(
-        height: 250.0,
+        height: 150.0,
         child: Form(
-          child: Column(
+          child: ListView(
             children: [
               SizedBox(
                 height: 20.0,
