@@ -5,8 +5,9 @@ import 'crud.dart';
 class Categoria with ChangeNotifier {
   final String name;
   final String url;
+  final String id;
 
-  Categoria({this.name, this.url});
+  Categoria({this.name, this.url, this.id});
 
   List<Categoria> provider;
 
@@ -21,8 +22,10 @@ class Categoria with ChangeNotifier {
     List<Categoria> res = new List();
     usersData = data['categorias'];
     for (int i = 0; i < usersData.length; i++) {
-      res.add(
-          new Categoria(name: usersData[i]['name'], url: usersData[i]['url']));
+      res.add(new Categoria(
+          name: usersData[i]['name'],
+          url: usersData[i]['url'],
+          id: usersData[i]['_id']));
     }
     return res;
   }
@@ -38,8 +41,9 @@ class Categoria with ChangeNotifier {
 class Cliente with ChangeNotifier {
   final String name;
   final String phone;
+  final String id;
 
-  Cliente({this.name, this.phone});
+  Cliente({this.name, this.phone, this.id});
 
   List<Cliente> provider;
 
@@ -55,7 +59,9 @@ class Cliente with ChangeNotifier {
     usersData = data['clientes'];
     for (int i = 0; i < usersData.length; i++) {
       res.add(new Cliente(
-          name: usersData[i]['name'], phone: usersData[i]['phone']));
+          name: usersData[i]['name'],
+          phone: usersData[i]['phone'],
+          id: usersData[i]['_id']));
     }
     return res;
   }
@@ -64,8 +70,9 @@ class Cliente with ChangeNotifier {
 class Departamento with ChangeNotifier {
   final String name;
   final String url;
+  final String id;
 
-  Departamento({this.name, this.url});
+  Departamento({this.name, this.url, this.id});
 
   List<Departamento> provider;
 
@@ -81,7 +88,9 @@ class Departamento with ChangeNotifier {
     usersData = data['departamentos'];
     for (int i = 0; i < usersData.length; i++) {
       res.add(new Departamento(
-          name: usersData[i]['name'], url: usersData[i]['url']));
+          name: usersData[i]['name'],
+          url: usersData[i]['url'],
+          id: usersData[i]['_id']));
     }
     return res;
   }
@@ -96,8 +105,9 @@ class Departamento with ChangeNotifier {
 
 class Lista with ChangeNotifier {
   final List productos;
+  final String id;
 
-  Lista({this.productos});
+  Lista({this.productos, this.id});
 
   List<Lista> provider;
 
@@ -112,7 +122,8 @@ class Lista with ChangeNotifier {
     List<Lista> res = new List();
     usersData = data['listas'];
     for (int i = 0; i < usersData.length; i++) {
-      res.add(new Lista(productos: usersData[i]['productos']));
+      res.add(new Lista(
+          productos: usersData[i]['productos'], id: usersData[i]['_id']));
     }
     return res;
   }
@@ -127,8 +138,9 @@ class Lista with ChangeNotifier {
 class Marca with ChangeNotifier {
   final String name;
   final String url;
+  final String id;
 
-  Marca({this.name, this.url});
+  Marca({this.name, this.url, this.id});
 
   List<Marca> provider;
 
@@ -143,7 +155,10 @@ class Marca with ChangeNotifier {
     List<Marca> res = new List();
     usersData = data['marcas'];
     for (int i = 0; i < usersData.length; i++) {
-      res.add(new Marca(name: usersData[i]['name'], url: usersData[i]['url']));
+      res.add(new Marca(
+          name: usersData[i]['name'],
+          url: usersData[i]['url'],
+          id: usersData[i]['_id']));
     }
     return res;
   }
@@ -161,8 +176,9 @@ class Orden with ChangeNotifier {
   final String lista;
   final double precio;
   final bool pagado;
+  final String id;
 
-  Orden({this.cliente, this.lista, this.precio, this.pagado});
+  Orden({this.cliente, this.lista, this.precio, this.pagado, this.id});
 
   List<Orden> provider;
 
@@ -178,11 +194,11 @@ class Orden with ChangeNotifier {
     usersData = data['ordenes'];
     for (int i = 0; i < usersData.length; i++) {
       res.add(new Orden(
-        cliente: usersData[i]['cliente'],
-        lista: usersData[i]['lista'],
-        precio: usersData[i]['precio'],
-        pagado: usersData[i]['pagado'],
-      ));
+          cliente: usersData[i]['cliente'],
+          lista: usersData[i]['lista'],
+          precio: usersData[i]['precio'],
+          pagado: usersData[i]['pagado'],
+          id: usersData[i]['_id']));
     }
     return res;
   }
@@ -206,6 +222,7 @@ class Producto with ChangeNotifier {
   final String barCode;
   final String departamento;
   final String categoria;
+  final String id;
 
   Producto(
       {this.stack,
@@ -215,7 +232,8 @@ class Producto with ChangeNotifier {
       this.descripcion,
       this.barCode,
       this.departamento,
-      this.categoria});
+      this.categoria,
+      this.id});
 
   List<Producto> provider;
 
@@ -231,15 +249,15 @@ class Producto with ChangeNotifier {
     usersData = data['productos'];
     for (int i = 0; i < usersData.length; i++) {
       res.add(new Producto(
-        stack: usersData[i]['stack'],
-        precioCompra: usersData[i]['precioCompra'],
-        precioVenta: usersData[i]['precioVenta'],
-        marca: usersData[i]['marca'],
-        descripcion: usersData[i]['descripcion'],
-        barCode: usersData[i]['barCode'],
-        departamento: usersData[i]['departamento'],
-        categoria: usersData[i]['categoria'],
-      ));
+          stack: usersData[i]['stack'],
+          precioCompra: usersData[i]['precioCompra'],
+          precioVenta: usersData[i]['precioVenta'],
+          marca: usersData[i]['marca'],
+          descripcion: usersData[i]['descripcion'],
+          barCode: usersData[i]['barCode'],
+          departamento: usersData[i]['departamento'],
+          categoria: usersData[i]['categoria'],
+          id: usersData[i]['_id']));
     }
     return res;
   }
@@ -262,8 +280,9 @@ class User with ChangeNotifier {
   final String firstName;
   final String lastName;
   final String avatar;
+  final String id;
 
-  User({this.firstName, this.lastName, this.avatar});
+  User({this.firstName, this.lastName, this.avatar, this.id});
 
   List<User> provider;
 
@@ -279,10 +298,10 @@ class User with ChangeNotifier {
     usersData = data['ordenes'];
     for (int i = 0; i < usersData.length; i++) {
       res.add(new User(
-        firstName: usersData[i]['firstName'],
-        lastName: usersData[i]['lastName'],
-        avatar: usersData[i]['avatar'],
-      ));
+          firstName: usersData[i]['firstName'],
+          lastName: usersData[i]['lastName'],
+          avatar: usersData[i]['avatar'],
+          id: usersData[i]['_id']));
     }
     return res;
   }

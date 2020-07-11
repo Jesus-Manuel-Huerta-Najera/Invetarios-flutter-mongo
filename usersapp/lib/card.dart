@@ -14,6 +14,7 @@ class _RecomendsState extends State<Recomends> {
   List<Widget> elementos = new List();
 
   void genera() {
+    elementos.clear();
     widget.objs.forEach((element) {
       elementos.add(CardCatDepMarca(
         obj: element,
@@ -26,11 +27,11 @@ class _RecomendsState extends State<Recomends> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    genera();
   }
 
   @override
   Widget build(BuildContext context) {
+    genera();
     return SingleChildScrollView(
         scrollDirection: Axis.horizontal, child: Row(children: elementos));
   }
