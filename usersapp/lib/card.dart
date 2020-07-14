@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'show_m_d_c.dart';
 
 class Recomends extends StatefulWidget {
   final List objs;
@@ -46,7 +49,7 @@ class CardCatDepMarca extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 150.0,
+        height: 152.0,
         margin: EdgeInsets.only(
           left: 20.0,
           top: 10.0,
@@ -57,15 +60,19 @@ class CardCatDepMarca extends StatelessWidget {
             border: Border.all(color: Colors.blue[200], width: 1.0)),
         width: 100.0, //size.width * 0.4,
         child: GestureDetector(
-          onTap: press,
+          onTap: () {
+            Navigator.push(
+                context,
+                CupertinoPageRoute(
+                    builder: (context) => ShowCatDepMarca(
+                          obj: obj,
+                        )));
+          },
           child: Container(
             padding: EdgeInsets.all(10.0),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(10),
-                bottomRight: Radius.circular(10),
-              ),
+              borderRadius: BorderRadius.all(Radius.circular(10)),
               boxShadow: [
                 BoxShadow(
                   offset: Offset(0, 10),
@@ -81,19 +88,13 @@ class CardCatDepMarca extends StatelessWidget {
                       ? DateTime.now().toIso8601String()
                       : obj.url,
                   child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        topRight: Radius.circular(10),
-                      ),
-                    ),
                     height: 100.0,
                     child: FadeInImage(
-                        placeholder: AssetImage('assets/marca.png'),
+                        placeholder: AssetImage('assets/producto.jpg'),
                         image: NetworkImage(obj.url == null
                             ? DateTime.now().toIso8601String()
                             : obj.url),
-                        fit: BoxFit.cover),
+                        fit: BoxFit.contain),
                   ),
                 ),
                 Text(

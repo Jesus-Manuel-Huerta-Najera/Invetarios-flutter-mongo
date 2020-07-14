@@ -24,6 +24,8 @@ router.post("/api/productos/create", async (req, res) => {
       marca: req.body["marca"],
       descripcion: req.body["descripcion"],
       barCode: req.body["barCode"],
+      departamento: req.body["departamento"],
+      categoria: req.body["categoria"],
       url: req.body["url"],
     });
   res.json({ message: "creado" });

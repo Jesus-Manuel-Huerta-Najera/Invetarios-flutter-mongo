@@ -223,9 +223,11 @@ class Producto with ChangeNotifier {
   final String departamento;
   final String categoria;
   final String id;
+  final String url;
 
   Producto(
-      {this.stack,
+      {this.url,
+      this.stack,
       this.precioCompra,
       this.precioVenta,
       this.marca,
@@ -249,6 +251,7 @@ class Producto with ChangeNotifier {
     usersData = data['productos'];
     for (int i = 0; i < usersData.length; i++) {
       res.add(new Producto(
+          url: usersData[i]['url'],
           stack: usersData[i]['stack'],
           precioCompra: usersData[i]['precioCompra'],
           precioVenta: usersData[i]['precioVenta'],
@@ -263,7 +266,9 @@ class Producto with ChangeNotifier {
   }
 
   Map toMap() {
-    return {
+    Map<String, dynamic> mapa;
+    mapa = {
+      "url": url,
       "stack": stack,
       "precioCompra": precioCompra,
       "precioVenta": precioVenta,
@@ -273,6 +278,7 @@ class Producto with ChangeNotifier {
       "departamento": departamento,
       "categoria": categoria,
     };
+    return mapa;
   }
 }
 

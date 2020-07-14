@@ -195,6 +195,24 @@ class _AddProductoState extends State<AddProducto> {
                             fontStyle: FontStyle.italic),
                       ),
                       onPressed: () {
+                        Map<String, dynamic> mapa = Producto(
+                          stack: stack == null ? 0 : stack,
+                          precioVenta: venta == null ? 0 : venta,
+                          precioCompra: compra == null ? 0 : compra,
+                          marca: marca == null ? "no marca" : marca.id,
+                          url: imagen == null
+                              ? DateTime.now().toIso8601String()
+                              : imagen.uri,
+                          descripcion: descripcion == null
+                              ? "no descripcion"
+                              : descripcion,
+                          departamento: departamento == null
+                              ? "no departamento"
+                              : departamento.id,
+                          categoria:
+                              categoria == null ? "no categoria" : categoria.id,
+                          barCode: barCode == null ? "no bar code" : barCode,
+                        ).toMap();
                         if (descripcion == "" ||
                             imagen == null ||
                             stack == null ||
@@ -211,10 +229,17 @@ class _AddProductoState extends State<AddProducto> {
                                 Future.delayed(Duration(seconds: 60), () {
                                   Navigator.of(context).pop();
                                 });
-                                return _confirma();
+                                return _confirma(mapa, false);
                               });
                         } else {
-//                    guardar();
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                Future.delayed(Duration(seconds: 60), () {
+                                  Navigator.of(context).pop();
+                                });
+                                return _confirma(mapa, true);
+                              });
                         }
                       },
                     )
@@ -225,10 +250,12 @@ class _AddProductoState extends State<AddProducto> {
           );
   }
 
-  Widget _confirma() {
+  Widget _confirma(Map<String, dynamic> mapa, bool todo) {
     return AlertDialog(
       title: Text(
-        'Hay campos incompletos, ¿Quieres guardar?',
+        !todo
+            ? 'Hay campos incompletos, ¿Quieres guardar?'
+            : '¿Quieres guardar?',
         style: TextStyle(fontSize: 25.0),
         textAlign: TextAlign.center,
       ),
@@ -239,7 +266,12 @@ class _AddProductoState extends State<AddProducto> {
                 child: RaisedButton.icon(
                     onPressed: () {
                       Navigator.of(context).pop();
-//                  guardar();
+                      Crud(coleccion: 'productos', mapa: mapa)
+                          .create()
+                          .whenComplete(() {
+                        Fluttertoast.showToast(msg: "Agregaste un producto");
+                        Navigator.of(context).pop();
+                      });
                     },
                     icon: Icon(Icons.check),
                     label: Text('Sí',
@@ -544,6 +576,7 @@ class _AddProductoState extends State<AddProducto> {
               child: Center(
                 child: GestureDetector(
                   onTap: () {
+                    Navigator.of(context).pop();
                     setState(() {
                       switch (coleccion) {
                         case 'categorias':

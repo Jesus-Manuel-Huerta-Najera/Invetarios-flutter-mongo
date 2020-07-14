@@ -7,6 +7,7 @@ import 'package:usersapp/title_btn.dart';
 
 import 'add_producto.dart';
 import 'card.dart';
+import 'drawer_home.dart';
 import 'header.dart';
 import 'models.dart';
 
@@ -67,49 +68,7 @@ class _HomePageState extends State<HomePage> {
               })
         ],
       ),
-      drawer: Drawer(
-          elevation: 16.0,
-          child: Column(
-            children: [
-              ListTile(
-                title: Text("Agregar Producto"),
-                leading: Icon(Icons.add_circle),
-                onTap: () {
-                  // naavegar a la viajeslist
-                  Navigator.of(context).pop();
-                  Navigator.push(context,
-                      CupertinoPageRoute(builder: (context) => AddProducto()));
-                },
-              ),
-              Divider(),
-              ListTile(
-                title: new Text("Ajustes"),
-                //trailing: new Icon(Icons.arrow_forward_ios),
-                leading: new Icon(Icons.settings),
-                onTap: () {},
-              ),
-              Divider(),
-              ListTile(
-                title: Text('Acerca de la app'),
-                leading: Transform.rotate(
-                  child: Icon(
-                    Icons.error_outline,
-                  ),
-                  angle: pi,
-                ),
-                onTap: () {},
-              ),
-              Divider(),
-              ListTile(
-                title: new Text("Cerrar sesion"),
-                leading: new Icon(Icons.exit_to_app),
-                onTap: () async {
-                  //await auth.singOut();
-                },
-              ),
-              Divider(),
-            ],
-          )),
+      drawer: DrawerHome(),
       body: SingleChildScrollView(
         child: Center(
           child: Column(
